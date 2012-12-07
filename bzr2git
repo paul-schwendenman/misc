@@ -1,0 +1,3 @@
+#/bin/bash
+
+bzr fast-export --plain | git fast-import
