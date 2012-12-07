@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Interface with Internet connection to share
+INET_IF=eth1
+
+# Interface from which to route traffic
+LAN_IF=eth0
+
+# Clean out current rules (if you have iptables rules you want to keep, skip this part and copy the part after this into your iptables config)
+iptables --flush
+iptables --table nat --flush
+iptables --delete-chain
+iptables --table nat --delete-chain
+
+# Route packets
+iptables --table nat --append POSTROUTING --out-interface $INET_IF -j MASQUERADE
+iptables --append FORWARD --in-interface $LAN_IF -j ACCEPT
+
+# Enable forwarding support in the kernel
+echo 1 > /proc/sys/net/ipv4/ip_forward
