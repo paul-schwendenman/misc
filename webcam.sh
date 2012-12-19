@@ -1,3 +1,5 @@
+#!/bin/bash
+
 HERE=$PWD
 DESTINATION=/dev/shm
 BACKUP=~/nothing.tar.gz

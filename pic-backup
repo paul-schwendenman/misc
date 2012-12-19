@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+	rsync -aivn --progress pictures/ /media/paul/Main/ | less
+fi
+if [ $# -eq 1 ]; then
+	rsync -a --progress pictures/ /media/paul/Main/
+fi
