@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 D=/mnt/temp
 mkdir $D

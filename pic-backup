@@ -1,8 +1,11 @@
 #!/bin/bash
 
+#$PATH=/media/paul/fa3ea422-7078-4c0a-a7b8-37ed13d211ac/paul/pictures/
+$PATH=/media/paul/Main/pictures/
+
 if [ $# -eq 0 ]; then
-	rsync -aivn --progress ~/pictures/ /media/paul/Main/pictures/ | less
+	rsync -aivn --progress ~/pictures/ $PATH | less
 fi
 if [ $# -eq 1 ]; then
-	rsync -a --progress ~/pictures/ /media/paul/Main/pictures/
+	rsync -a --progress ~/pictures/ $PATH
 fi
