@@ -1,0 +1,13 @@
+#!/usr/bin/python
+
+with open("/home/paul/.bash_history", mode='r') as f:
+    l = f.readlines()
+    print len(l), 
+
+l = list(set(l))
+
+with open("/home/paul/.bash_history", mode='w') as f:
+    print len(l),
+    f.writelines(l)
+
+print
