@@ -1,0 +1,8 @@
+#! /bin/bash
+
+echo "Configuring bash"
+cp .bashrc $HOME
+
+echo "Configuring git"
+cp .gitconfig $HOME
+
