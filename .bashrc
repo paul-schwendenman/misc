@@ -26,10 +26,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.bin" ] ; then
-    PATH="$HOME/.bin:$PATH"
-fi
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
@@ -122,7 +118,16 @@ fi
 #BLACK="${debian_chroot:+($debian_chroot)}\n\[\033[0;30m\][$$:$PPID - \j:\!\[\033[0;30m\]]\[\033[0;36m\] \T \\[\033[0;30m\][\[\033[0;32m\]\u@\H\[\033[0;30m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[0;30m\]] \[\033[0;30m\]\w\[\033[0;30m\]  \n$ " #0;32m
 #CLR="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \\[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[m\]\w\[\033[m\]  \n$ " #0;32m
 
-#export PATH=${HOME}/.bin:$PATH
 #export PYTHONPATH=${HOME}/.lib/python
-#export EDITOR=/usr/bin/joe
 
+# Set joe as editor
+if [ -f /usr/bin/joe ] then
+	export EDITOR=/usr/bin/joe
+elif [ -f /usr/local/bin/joe ] then
+	export EDITOR=/usr/local/bin/joe
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.bin" ] ; then
+    PATH="$HOME/.bin:$PATH"
+fi
