@@ -6,3 +6,6 @@ cp .bashrc $HOME
 echo "Configuring git"
 cp .gitconfig $HOME
 
+echo "Configuring mercurial"
+cp .hgrc $HOME
+
