@@ -108,9 +108,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-if [ ${SHLVL} = 1 ] && [ $(tty) = /dev/tty1 ] && ! [ `uname -n` = "paul-ubuntu" ] ; then
-    startx
-fi
+# startx if the first ttyl on a given uname
+#if [ ${SHLVL} = 1 ] && [ $(tty) = /dev/tty1 ] && ! [ `uname -n` = "paul-ubuntu" ] ; then
+#    startx
+#fi
 
 #if [ ${SHLVL} = 1 ] && ! [ -z `echo $(tty) | grep tty` ]; then fi
 #if [ ${SHLVL} = 2 ] && [ ${TERM} = "screen" ] ; then fi
