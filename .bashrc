@@ -121,9 +121,9 @@ fi
 #export PYTHONPATH=${HOME}/.lib/python
 
 # Set joe as editor
-if [ -f /usr/bin/joe ] then
+if [ -f /usr/bin/joe ]; then
 	export EDITOR=/usr/bin/joe
-elif [ -f /usr/local/bin/joe ] then
+elif [ -f /usr/local/bin/joe ]; then
 	export EDITOR=/usr/local/bin/joe
 fi
 
