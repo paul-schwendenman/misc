@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export D=$HOME/scripts
+
+if [ -f $D/commands$1 ]; then
+	scriptreplay -t$D/timing$1 $D/commands$1 $2
+else
+	echo "Invalid filename"
+fi
