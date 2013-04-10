@@ -16,3 +16,7 @@ if [ "$1" == "all" ]; then
 	zgrep -h "Ban " /var/log/fail2ban.log* | awk '{print $NF}' | sort | uniq -c
 fi
 
+if [ "$#" -eq 0 ]; then
+	echo "Usage $0 subcommand"
+	echo -e "\tSubcommands: today, logresolve, section, subnet, all"
+fi
