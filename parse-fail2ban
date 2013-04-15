@@ -2,21 +2,59 @@
 
 if [ "$1" == "today" ]; then
 	grep "Ban " /var/log/fail2ban.log | grep `date +%Y-%m-%d` | awk '{print $NF}' | sort | awk '{print $1,"("$1")"}' | uniq -c | sort -n
+	exit 0
 fi
+
+if [ "$1" == "yesterday" ]; then
+	grep "Ban " /var/log/fail2ban.log | grep `TZ='HST' date +%Y-%m-%d` | awk '{print $NF}' | sort | awk '{print $1,"("$1")"}' | uniq -c | sort -n
+	exit 0
+fi
+
 if [ "$1" == "logresolve" ]; then
 	awk '($(NF-1) = /Ban/){print $NF,"("$NF")"}' /var/log/fail2ban.log | sort | logresolve | uniq -c | sort -n
+	exit 0
 fi
 if [ "$1" == "section" ]; then
 	zgrep -h "Ban " /var/log/fail2ban.log* | awk '{print $5,$1}' | sort | uniq -c
+	exit 0
 fi
 if [ "$1" == "subnet" ]; then
 	zgrep -h "Ban " /var/log/fail2ban.log* | awk '{print $NF}' | awk -F\. '{print $1"."$2"."}' | sort | uniq -c  | sort -n | tail
+	exit 0
 fi
 if [ "$1" == "all" ]; then
 	zgrep -h "Ban " /var/log/fail2ban.log* | awk '{print $NF}' | sort | uniq -c
+	exit 0
+fi
+
+if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$1" == "help" ]; then
+	echo "Usage: $0 subcommand"
+	echo -e "\tSubcommands: today, yesterday, logresolve, section, subnet, all"
+	echo
+	echo "Subcommands:"
+	echo "today"
+	echo -e "\tprints the ip addresses that have been banned 'today'"
+	echo "yesterday"
+	echo -e "\tprints the ip addresses that were banned 'yesterday.'"
+	echo -e "\tnote this naively sets the timezone to hawaii time does not really figure out yesterday"
+	echo -e "\tbut is useful if the day just switched in the mainland us"
+	echo "logresolve"
+	echo -e "\truns logresolve on the offending ip addresses"
+	echo "section"
+	echo -e "\tgroups the banned ip addresses by date and jail"
+	echo "subnet"
+	echo -e "\tdoes a naive subnet classification i.e. 192.168.x.x"
+	echo "all"
+	echo -e "\tprints all of the ip addresses that have ever been banned"
+	exit 0
 fi
 
 if [ "$#" -eq 0 ]; then
-	echo "Usage $0 subcommand"
-	echo -e "\tSubcommands: today, logresolve, section, subnet, all"
+	echo "Usage: $0 subcommand"
+	echo -e "\tSubcommands: today, yesterday, logresolve, section, subnet, all"
+	exit 1
 fi
+
+echo "Usage: $0 subcommand"
+echo -e "\tSubcommands: today, yesterday, logresolve, section, subnet, all"
+exit 2
