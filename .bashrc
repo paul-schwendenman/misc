@@ -52,14 +52,19 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+if [ -f "/usr/bin/acpi" ] ; then
+    ACPI="`acpi -b | awk -F ' ' '{print $4}'`"
+else
+    ACPI=
+fi
 
 
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \\[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[m\]\w\[\033[m\]  \n$ "
+    PS1="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \\[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]:\[\033[0;35m ${ACPI} \033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[m\]\w\[\033[m\]  \n$ "
 	#"${debian_chroot:+($debian_chroot)}\n\[\033[0;30m\][$$:$PPID - \j:\!\[\033[0;30m\]]\[\033[0;36m\] \T \\[\033[0;30m\][\[\033[0;32m\]\u@\H\[\033[0;30m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[0;30m\]] \[\033[0;30m\]\w\[\033[0;30m\]  \n$ " #0;32m
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1="${debian_chroot:+($debian_chroot)}\n[$$:$PPID - \j:\!] [\T \[\\u@\H: `acpi -b | awk -F ' ' '{print $4}'` +${SHLVL}] \w  \n$ "
+    PS1="${debian_chroot:+($debian_chroot)}\n[$$:$PPID - \j:\!] [\T \[\\u@\H: ${ACPI} +${SHLVL}] \w  \n$ "
     #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
