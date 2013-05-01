@@ -1,3 +1,4 @@
 [ui]
 username = Paul Schwendenman <schwendenman.paul@gmail.com>
 editor = joe
+ssh = ssh -C
