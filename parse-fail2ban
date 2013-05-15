@@ -15,7 +15,7 @@ if [ "$1" == "logresolve" ]; then
 	exit 0
 fi
 if [ "$1" == "section" ]; then
-	zgrep -h "Ban " /var/log/fail2ban.log* | awk '{print $5,$1}' | sort | uniq -c
+	zgrep -h "Ban " /var/log/fail2ban.log* | awk '{print $5,$1}' | sort -r | uniq -c
 	exit 0
 fi
 if [ "$1" == "subnet" ]; then
