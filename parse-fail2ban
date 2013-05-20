@@ -36,7 +36,7 @@ if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$1" == "help" ]; then
 	echo -e "\tprints the ip addresses that have been banned 'today'"
 	echo "yesterday"
 	echo -e "\tprints the ip addresses that were banned 'yesterday.'"
-	echo -e "\tnote this naively sets the timezone to hawaii time does not really figure out yesterday"
+	echo -e "\tnote this naively sets the timezone to Hawaii time does not really figure out yesterday"
 	echo -e "\tbut is useful if the day just switched in the mainland us"
 	echo "logresolve"
 	echo -e "\truns logresolve on the offending ip addresses"
