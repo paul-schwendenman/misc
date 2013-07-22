@@ -1,11 +1,11 @@
 #! /bin/bash
 
 echo "Configuring bash"
-cp .bashrc $HOME
+cp bashrc $HOME/.bashrc
 
 echo "Configuring git"
-cp .gitconfig $HOME
+cp gitconfig $HOME/.gitconfig
 
 echo "Configuring mercurial"
-cp .hgrc $HOME
+cp hgrc $HOME/.hgrc
 
