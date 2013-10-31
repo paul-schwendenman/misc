@@ -1,12 +1,12 @@
 #!/bin/bash
 
 if [ "$1" == "today" ]; then
-	grep "Ban " /var/log/fail2ban.log | grep `date +%Y-%m-%d` | awk '{print $NF}' | sort | awk '{print $1,"("$1")"}' | uniq -c | sort -n
+	grep "Ban " /var/log/fail2ban.log | grep "$(date +%Y-%m-%d)" | awk '{print $NF}' | sort | awk '{print $1,"("$1")"}' | uniq -c | sort -n
 	exit 0
 fi
 
 if [ "$1" == "yesterday" ]; then
-	grep "Ban " /var/log/fail2ban.log | grep `TZ='HST' date +%Y-%m-%d` | awk '{print $NF}' | sort | awk '{print $1,"("$1")"}' | uniq -c | sort -n
+	grep "Ban " /var/log/fail2ban.log | grep "$(TZ='HST' date +%Y-%m-%d)" | awk '{print $NF}' | sort | awk '{print $1,"("$1")"}' | uniq -c | sort -n
 	exit 0
 fi
 
@@ -51,7 +51,7 @@ fi
 
 if [ "$#" -eq 0 ]; then
 	echo "Usage: $0 subcommand"
-	echo -e "\tSubcommands: today, yesterday, logresolve, section, subnet, all"
+	echo -e "\tSubcommands: today, yesterday, logresolve, section, subnet, all, help"
 	exit 1
 fi
 

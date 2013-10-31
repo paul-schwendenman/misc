@@ -20,7 +20,7 @@ else
 	FILENAME=$2
 
 	# Gain access to the webcam $DEV
-    if [ $MODE == "-u" ]; then     
+    if [ "$MODE" == "-u" ]; then     
         sudo chown paul $DEV 
 	    MODE=$2
 		FILENAME=$3
@@ -29,10 +29,10 @@ else
 	# Record or Play a specific file
 
 	# Copy the files to a location
-    if [ $MODE = "-c" ]; then
-        if [ -d $FILENAME ]; then
+    if [ "$MODE" = "-c" ]; then
+        if [ -d "$FILENAME" ]; then
             if [ -e ./*.avi ]; then
-                rsync -t -v -W  ./*.avi $FILENAME
+                rsync -t -v -W  ./*.avi "$FILENAME"
 			else
 		        echo "No files to copy"
 			fi
@@ -42,16 +42,16 @@ else
     fi
 
 	# Backup the files
-    if [ $MODE = "-b" ]; then
-        if [ -e $DESTINATION ]; then
-            tar xvfz $BACKUP    
+    if [ "$MODE" = "-b" ]; then
+        if [ -e "$DESTINATION" ]; then
+            tar xvfz "$BACKUP"    
         fi                      
         if [ -d nothing ]; then
             mkdir nothing  
         fi                   
 
         rsync -t -v -W  ./*.avi nothing
-        tar -pczf $DESTINATION nothing/
+        tar -pczf "$DESTINATION" nothing/
     fi                                       
 	
 	# Play - runs mplayer with the webcam output
@@ -60,7 +60,7 @@ else
             mplayer $DEVICE
         else
 		    cd $HERE
-		    mplayer `echo $FILENAME`
+		    mplayer "$(echo $FILENAME)"
         fi                 
 	fi
 
