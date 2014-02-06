@@ -1,11 +1,103 @@
 #! /bin/bash
 
-echo "Configuring bash"
-cp bashrc $HOME/.bashrc
+version () {
+	cat <<_EOF
+ ___________________
+/   Set up          \ 
+|      v0.2.1       |
+|                   |
+\ Paul Schwendenman /
+ -------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\ 
+                ||----w |
+                ||     ||
+_EOF
 
-echo "Configuring git"
-cp gitconfig $HOME/.gitconfig
+}
 
-echo "Configuring mercurial"
-cp hgrc $HOME/.hgrc
+usage() {
+	version
+	cat <<_EOF
 
+Usage:
+    $program all
+        Copy all config files
+    $program bash
+    	Copy bashrc
+    $program git
+        Copy git config
+    $program hg
+    	Copy mercurial rc file.
+    $program help
+        Show this text.
+    $program version
+        Show version information.
+
+More information?
+_EOF
+}
+
+is_command() {
+	case "$1" in
+		all|bash|git|hg|help|--help|version|--version) return 0 ;;
+		*) return 1 ;;
+	esac
+}
+
+conf_bash () {
+	echo "Configuring bash"
+	cp bashrc $HOME/.bashrc
+}
+
+conf_git () {
+	echo "Configuring git"
+	cp gitconfig $HOME/.gitconfig
+}
+
+conf_hg () {
+	echo "Configuring mercurial"
+	cp hgrc $HOME/.hgrc
+}
+
+
+program="$(basename "$0")"
+command="$1"
+
+if is_command "$command"; then
+	shift
+else
+	command="help"
+fi
+
+case "$command" in
+	all)
+		conf_bash
+		conf_git
+		conf_hg
+		exit 0
+		;;
+	bash)
+		conf_bash
+		;;
+	git)
+		conf_git
+		exit 0
+		;;
+	hg)
+		conf_hg
+		exit 0
+		;;
+	help|--help)
+		usage
+		;;
+	version|--version)
+		version
+		exit 0
+		;;
+	*)
+		usage
+		exit 1
+		;;
+esac
