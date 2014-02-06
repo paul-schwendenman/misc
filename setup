@@ -68,7 +68,7 @@ command="$1"
 if is_command "$command"; then
 	shift
 else
-	command="help"
+	command="all"
 fi
 
 case "$command" in
