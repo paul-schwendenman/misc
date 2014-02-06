@@ -30,6 +30,8 @@ Usage:
         Copy git config
     $program hg
     	Copy mercurial rc file.
+    $program diff [hg|git|bash|all]
+    	Show differences in config files
     $program help
         Show this text.
     $program version
@@ -41,7 +43,7 @@ _EOF
 
 is_command() {
 	case "$1" in
-		all|bash|git|hg|help|--help|version|--version) return 0 ;;
+		all|bash|git|hg|diff|help|--help|version|--version) return 0 ;;
 		*) return 1 ;;
 	esac
 }
@@ -61,6 +63,31 @@ conf_hg () {
 	cp hgrc $HOME/.hgrc
 }
 
+conf_diff () {
+	case "$1" in
+		bash)
+			diff bashrc $HOME/.bashrc
+			;;
+		git)
+			diff gitconfig $HOME/.gitconfig
+			;;
+		hg)
+			diff hgrc $HOME/.hgrc
+			;;
+		all)
+			echo "[bash]"
+			diff bashrc $HOME/.bashrc
+			echo "[git]"
+			diff gitconfig $HOME/.gitconfig
+			echo "[hg]"
+			diff hgrc $HOME/.hgrc
+			;;
+		*)
+			echo "Try bash|git|hg|all"
+			exit 1
+			;;
+	esac
+}
 
 program="$(basename "$0")"
 command="$1"
@@ -87,6 +114,10 @@ case "$command" in
 		;;
 	hg)
 		conf_hg
+		exit 0
+		;;
+	diff)
+		conf_diff $1
 		exit 0
 		;;
 	help|--help)
