@@ -26,6 +26,8 @@ usage() {
 Usage:
     $program all
         Show all banned ips
+    $program geoip
+        Show all banned "locations" (lookup ips with geoiplookup)
     $program date YYYY-MM-DD
     	Show banned ip addresses on a certain date
     $program today
@@ -48,7 +50,7 @@ _EOF
 
 is_command() {
 	case "$1" in
-		all|ip|section|date|today|count|help|--help|version|--version) return 0 ;;
+		all|ip|section|date|today|count|geoip|help|--help|version|--version) return 0 ;;
 		*) return 1 ;;
 	esac
 }
@@ -78,6 +80,11 @@ ip () {
 
 all () {
         zgrep -h "WARNING \[[a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $NF}' | sort -V | uniq -c
+
+}
+
+geoip () {
+        zgrep -h "WARNING \[[a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $NF}' | xargs -I{} geoiplookup {} | cut -d " " -f 4- | sort | uniq -c | sort -n -r
 
 }
 
@@ -119,6 +126,10 @@ fi
 case "$command" in
 	all)
 		all
+		exit 0
+		;;
+	geoip)
+		geoip
 		exit 0
 		;;
 	ip)
