@@ -67,12 +67,15 @@ conf_diff () {
 	case "$1" in
 		bash)
 			diff bashrc $HOME/.bashrc
+			exit 0
 			;;
 		git)
 			diff gitconfig $HOME/.gitconfig
+			exit 0
 			;;
 		hg)
 			diff hgrc $HOME/.hgrc
+			exit 0
 			;;
 		all)
 			echo "[bash]"
@@ -107,6 +110,7 @@ case "$command" in
 		;;
 	bash)
 		conf_bash
+		exit 0
 		;;
 	git)
 		conf_git
