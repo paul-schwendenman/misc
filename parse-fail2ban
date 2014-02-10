@@ -28,15 +28,18 @@ Usage:
         Show all banned ips
     $program geoip
         Show all banned "locations" (lookup ips with geoiplookup)
-    $program date YYYY-MM-DD
+    $program date
+    	Show number of bans per date.
+    $program date [YYYY-MM-DD]
     	Show banned ip addresses on a certain date
     $program today
         Show all banned ips that have been banned today
     $program ip address
     	Show dates a certian ip address was banned
+    $program section
+    	Show ips grouped by section.
     $program section [jail]
-    	Show ips grouped by section. Optional jail name will
-    	show results only for that particular jail.
+    	Show results only for that particular jail.
     $program count [jail]
         Show count of total bans (for optional jail.)
     $program help
@@ -56,14 +59,18 @@ is_command() {
 }
 
 ddate() {
-	echo "{$1}"
-	echo $1 | grep -q "^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}"
-	if [ $? -eq 0 ]; then
-        	grep -h "WARNING \[[a-z]*\] Ban" /var/log/fail2ban.log  | grep "^$1" | awk '{print $NF}' | uniq -c | sort -n -r
-        	exit 0
-        else
-        	echo "Bad Date format: YYYY-MM-DD"
-        	exit 1
+	if [ -z $1 ]; then
+	        zgrep -h "WARNING \[[a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $1}' | sort -r | uniq -c
+	else
+		echo "{$1}"
+		echo $1 | grep -q "^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}"
+		if [ $? -eq 0 ]; then
+			grep -h "WARNING \[[a-z]*\] Ban" /var/log/fail2ban.log  | grep "^$1" | awk '{print $NF}' | uniq -c | sort -n -r
+			exit 0
+		else
+			echo "Bad Date format: YYYY-MM-DD"
+			exit 1
+		fi
 	fi
 }
 
