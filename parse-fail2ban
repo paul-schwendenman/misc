@@ -107,18 +107,17 @@ section () {
 count () {
 	if [ -z $1 ]; then
 	        lines=$(zgrep -h "WARNING \[[a-z]*\] U*n*[Bb]an" /var/log/fail2ban.log*)
-	        unban=$(echo "$lines" | grep "Unban" | wc -l)
-	        ban=$(echo "$lines" | grep "Ban" | wc -l)
-	        echo Total Bans: $ban
-	        echo Active Bans: $((ban - unban))
 	else
 		echo "{$1}"
 	        lines=$(zgrep -h "WARNING \[$1\] U*n*[Bb]an" /var/log/fail2ban.log*)
-	        unban=$(echo "$lines" | grep "Unban" | wc -l)
-	        ban=$(echo "$lines" | grep "Ban" | wc -l)
-	        echo Total Bans: $ban
-	        echo Active Bans: $((ban - unban))
 	fi
+	unban=$(echo "$lines" | grep "Unban" | wc -l)
+	banned=$(echo "$lines" | grep "Ban")
+	ban=$(echo "$banned" | wc -l)
+	unique=$(echo "$banned" | awk '{print $NF}' | sort -n | uniq -c | wc -l)
+	echo Total Bans: $ban
+	echo Active Bans: $((ban - unban))
+	echo Unique Bans: "$unique"
 }
 
 program="$(basename "$0")"
