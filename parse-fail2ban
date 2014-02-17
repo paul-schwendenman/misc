@@ -37,7 +37,9 @@ Usage:
     $program ip address
     	Show dates a certian ip address was banned
     $program section
-    	Show ips grouped by section.
+    	Show ips grouped by jail.
+    $program section date
+    	Show results grouped by both jail and date.
     $program section [jail]
     	Show results only for that particular jail.
     $program count [jail]
@@ -62,10 +64,9 @@ ddate() {
 	if [ -z $1 ]; then
 	        zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $1}' | sort -r | uniq -c
 	else
-		echo "{$1}"
 		echo $1 | grep -q "^[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}"
 		if [ $? -eq 0 ]; then
-			grep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log  | grep "^$1" | awk '{print $NF}' | uniq -c | sort -n -r
+			grep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log  | grep "^$1" | awk '{print $NF}' | sort -V | uniq -c |  sort -r -V
 			exit 0
 		else
 			echo "Bad Date format: YYYY-MM-DD"
@@ -86,7 +87,7 @@ ip () {
 }
 
 all () {
-        zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $NF}' | sort -V | uniq -c
+        zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $NF}' | sort -V | uniq -c | column
 
 }
 
@@ -97,10 +98,13 @@ geoip () {
 
 section () {
 	if [ -z $1 ]; then
-	        zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $1,$5}' | sort -r | awk '{printf "%-10s %s\n", $2, $1}' | uniq -c
+	        zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $5}' | sort -r | uniq -c | column -t
 	else
-		echo "{$1}"
-	        zgrep -h "WARNING \[[-a-z]*\] U*n*[Bb]an" /var/log/fail2ban.log* | grep "\[$1\]" | awk '{print $1,$6,$7}' | sort -r -n | uniq -c
+		if [ "$1" == "date" ]; then
+	        	zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $1,$5}' | sort -r | awk '{printf "%-10s %s\n", $2, $1}' | uniq -c | column -t
+		else
+	        	zgrep -h "WARNING \[[-a-z]*\] U*n*[Bb]an" /var/log/fail2ban.log* | grep "\[$1\]" | awk '{print $1,$6,$7}' | sort -r -n | uniq -c | column -t
+	        fi
 	fi
 }
 
@@ -108,7 +112,6 @@ count () {
 	if [ -z $1 ]; then
 	        lines=$(zgrep -h "WARNING \[[-a-z]*\] U*n*[Bb]an" /var/log/fail2ban.log*)
 	else
-		echo "{$1}"
 	        lines=$(zgrep -h "WARNING \[$1\] U*n*[Bb]an" /var/log/fail2ban.log*)
 	fi
 	unban=$(echo "$lines" | grep "Unban" | wc -l)
