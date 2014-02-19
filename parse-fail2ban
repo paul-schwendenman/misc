@@ -34,6 +34,8 @@ Usage:
     	Show banned ip addresses on a certain date
     $program today
         Show all banned ips that have been banned today
+    $program time
+        Show time all ips were banned today
     $program ip address
     	Show dates a certian ip address was banned
     $program section
@@ -55,7 +57,7 @@ _EOF
 
 is_command() {
 	case "$1" in
-		all|ip|section|date|today|count|geoip|help|--help|version|--version) return 0 ;;
+		all|ip|section|date|time|today|count|geoip|help|--help|version|--version) return 0 ;;
 		*) return 1 ;;
 	esac
 }
@@ -86,8 +88,20 @@ ip () {
         fi
 }
 
+today () {
+	#grep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log  | grep "^$1" | awk '{print $NF, $5}' |  sort -k 1,1 | awk 'BEGIN {ORS=" "} foo != $1 { print "\n" $1; foo=$1 } {print $2}' | sort | column -t
+	grep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log  | grep "^$1" | awk '{print $NF, $5}' | sort -r | uniq -c |  sort -k 2,2 | awk 'BEGIN {ORS=" "} foo != $2 { print "\n" $2; foo=$2 } {print $1 $3}' | sort -V | column -t
+
+}
+
+ttime () {
+	grep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log  | grep "^$1" | awk '{print $NF, $2}' | sed 's/\(:[0-9][0-9]\)\,[0-9]\{3\}/\1/g' |  sort -k 1,1 | awk 'BEGIN {ORS=" "} foo != $1 { print "\n" $1; foo=$1 } {print $2}' | sort -V | column -t
+}
+
 all () {
         zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $NF}' | sort -V | uniq -c | column
+#	zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log*  | awk '{print $NF, $5}' | sort -u |  sort -k 1,1 | awk 'BEGIN {ORS=" "} foo != $1 { print "\n" $1; foo=$1 } {print $2}' | sort -V | column -t
+#	zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log*  | awk '{print $NF, $5}' | sort -r | uniq -c |  sort -k 2,2 | awk 'BEGIN {ORS=" "} foo != $2 { print "\n" $2; foo=$2 } {print $1 $3}' | sort -V | column
 
 }
 
@@ -152,8 +166,12 @@ case "$command" in
 		count $1
 		exit 0
 		;;
+	time)
+		ttime $(date +%Y-%m-%d)
+		;;
 	today)
-		ddate $(date +%Y-%m-%d)
+		today $(date +%Y-%m-%d)
+		#ddate $(date +%Y-%m-%d)
 		;;
 	date)
 		ddate $1
