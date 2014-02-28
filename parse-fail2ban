@@ -27,7 +27,7 @@ Usage:
     $program all
         Show all banned ips
     $program geoip [YYYY-MM-DD]
-        Show all banned "locations" (lookup ips with geoiplookup) 
+        Show all banned "locations" (lookup ips with geoiplookup)
     $program date
     	Show number of bans per date.
     $program date [YYYY-MM-DD]
@@ -46,6 +46,8 @@ Usage:
     	Show results only for that particular jail.
     $program count [jail]
         Show count of total bans (for optional jail.)
+    $program active
+        Show active bans.
     $program help
         Show this text.
     $program version
@@ -57,7 +59,7 @@ _EOF
 
 is_command() {
 	case "$1" in
-		all|ip|section|date|time|today|count|geoip|help|--help|version|--version) return 0 ;;
+		all|ip|section|date|time|today|count|geoip|active|help|--help|version|--version) return 0 ;;
 		*) return 1 ;;
 	esac
 }
@@ -142,6 +144,14 @@ count () {
 	echo Unique Bans: "$unique"
 }
 
+active() {
+	lines=$(zgrep -h "WARNING \[[-a-z]*\] U*n*[Bb]an" /var/log/fail2ban.log*)
+	uban=$(echo "$lines" | grep "Unban" )
+	ban=$(echo "$lines" | grep "Ban")
+	diff <(echo "$ban" | awk '{print $NF,$5}' | sort -V) <(echo "$uban" | awk '{print $NF,$5}' | sort -V) | grep "^<" | awk '{print $2,$3}'
+
+}
+
 program="$(basename "$0")"
 command="$1"
 
@@ -188,6 +198,9 @@ case "$command" in
 		;;
 	date)
 		ddate $1
+		;;
+	active)
+		active
 		;;
 	help|--help)
 		usage
