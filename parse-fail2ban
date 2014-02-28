@@ -26,8 +26,8 @@ usage() {
 Usage:
     $program all
         Show all banned ips
-    $program geoip
-        Show all banned "locations" (lookup ips with geoiplookup)
+    $program geoip [YYYY-MM-DD]
+        Show all banned "locations" (lookup ips with geoiplookup) 
     $program date
     	Show number of bans per date.
     $program date [YYYY-MM-DD]
@@ -107,7 +107,11 @@ all () {
 }
 
 geoip () {
-        zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $NF}' | xargs -I{} geoiplookup {} | cut -d " " -f 4- | sort | uniq -c | sort -n -r
+	if [ -z "$1" ]; then
+	        zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | awk '{print $NF}' | xargs -I{} geoiplookup {} | cut -d " " -f 4- | sort | uniq -c | sort -n -r
+	else
+	        zgrep -h "WARNING \[[-a-z]*\] Ban" /var/log/fail2ban.log* | grep "^$1" | awk '{print $NF}' | xargs -I{} geoiplookup {} | cut -d " " -f 4- | sort | uniq -c | sort -n -r
+	fi
 
 }
 
@@ -153,7 +157,11 @@ case "$command" in
 		exit 0
 		;;
 	geoip)
-		geoip
+		if [ "$1" == "today" ]; then
+			geoip "$(date +%Y-%m-%d)"
+		else
+			geoip "$1"
+		fi
 		exit 0
 		;;
 	ip)
