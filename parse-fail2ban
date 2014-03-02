@@ -148,7 +148,7 @@ active() {
 	lines=$(zgrep -h "WARNING \[[-a-z]*\] U*n*[Bb]an" /var/log/fail2ban.log*)
 	uban=$(echo "$lines" | grep "Unban" )
 	ban=$(echo "$lines" | grep "Ban")
-	diff <(echo "$ban" | awk '{print $NF,$5}' | sort -V) <(echo "$uban" | awk '{print $NF,$5}' | sort -V) | grep "^<" | awk '{print $2,$3}'
+	diff <(echo "$ban" | awk '{print $NF,$5}' | sort -V) <(echo "$uban" | awk '{print $NF,$5}' | sort -V) | grep "^<" | awk '{print $2,$3}' | column -t
 
 }
 
