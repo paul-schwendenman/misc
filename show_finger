@@ -1,0 +1,28 @@
+#! /bin/bash
+
+
+program="$(basename "$0")"
+command="$1"
+shift
+
+case "$command" in
+	server)
+		cd /etc/ssh
+		for file in *sa_key.pub; do
+			ssh-keygen -lf $file
+		done
+		;;
+	known)
+		cd $HOME
+		ssh-keygen -lf .ssh/known_hosts -F "$1"
+		;;
+	*)
+		cat <<_EOF
+Usage:	
+	$program server
+		This command prints the fingerprints of the current server.
+	$program known HOST
+		This command prints the matching finger print for HOST from known_hosts
+_EOF
+		;;
+esac
