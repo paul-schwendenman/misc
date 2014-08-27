@@ -52,45 +52,45 @@ is_command() {
 
 conf_bash () {
 	echo "Configuring bash"
-	cp bashrc $HOME/.bashrc
+	cp dotfiles/bashrc $HOME/.bashrc
 }
 
 conf_git () {
 	echo "Configuring git"
-	cp gitconfig $HOME/.gitconfig
+	cp dotfiles/gitconfig $HOME/.gitconfig
 }
 
 conf_hg () {
 	echo "Configuring mercurial"
-	cp hgrc $HOME/.hgrc
+	cp dotfiles/hgrc $HOME/.hgrc
 }
 
 conf_screen () {
 	echo "Configuring screen"
-	cp screenrc $HOME/.screenrc
+	cp dotfiles/screenrc $HOME/.screenrc
 }
 
 conf_diff () {
 	case "$1" in
 		bash)
-			diff bashrc $HOME/.bashrc
+			diff dotfiles/bashrc $HOME/.bashrc
 			exit 0
 			;;
 		git)
-			diff gitconfig $HOME/.gitconfig
+			diff dotfiles/gitconfig $HOME/.gitconfig
 			exit 0
 			;;
 		hg)
-			diff hgrc $HOME/.hgrc
+			diff dotfiles/hgrc $HOME/.hgrc
 			exit 0
 			;;
 		all)
 			echo "[bash]"
-			diff bashrc $HOME/.bashrc
+			diff dotfiles/bashrc $HOME/.bashrc
 			echo "[git]"
-			diff gitconfig $HOME/.gitconfig
+			diff dotfiles/gitconfig $HOME/.gitconfig
 			echo "[hg]"
-			diff hgrc $HOME/.hgrc
+			diff dotfiles/hgrc $HOME/.hgrc
 			;;
 		*)
 			echo "Try bash|git|hg|all"
