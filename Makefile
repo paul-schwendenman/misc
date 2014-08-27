@@ -10,5 +10,8 @@ hg:
 screen:
 	cp dotfiles/screenrc ${HOME}/.screenrc
 
-all: bash git hg screen
+Xdefaults:
+	cp dotfiles/Xdefaults ${HOME}/.Xdefaults
+
+all: bash git hg screen Xdefaults
 	@echo 
