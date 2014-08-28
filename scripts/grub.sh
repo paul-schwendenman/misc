@@ -13,4 +13,3 @@ sudo umount /tmp/mnt/dev
 sudo umount /tmp/mnt/proc
 sudo umount /tmp/mnt/
 sudo umount /tmp/mnt2
-
