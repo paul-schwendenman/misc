@@ -1,6 +1,9 @@
 /* Couleurs Tango */
 /* URxvt.foreground: #EEEEEC */
 /* URxvt.background: #323232 */
+/* URxvt*background: white */
+/* URxvt*foreground: black */
+
 URxvt.color0:     #2E3436
 URxvt.color1:     #CC0000
 URxvt.color2:     #4E9A06
@@ -19,7 +22,7 @@ URxvt.color14:    #34E2E2
 URxvt.color15:    #EEEEEC
 
 URxvt.transparent: true
-URxvt.shading:     25
+URxvt.shading:     22
 URxvt.fading:      40
 URxvt.blurRadius:	10x10
 URxvt.reverseVideo: True
