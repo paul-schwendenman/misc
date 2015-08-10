@@ -1,17 +1,18 @@
 bash:
-	cp dotfiles/bashrc ${HOME}/.bashrc
+	ln dotfiles/bashrc ${HOME}/.bashrc
 
 git:
-	cp dotfiles/gitconfig ${HOME}/.gitconfig
+	ln dotfiles/gitconfig ${HOME}/.gitconfig
 
 hg:
-	cp dotfiles/hgrc ${HOME}/.hgrc
+	ln dotfiles/hgrc ${HOME}/.hgrc
 
 screen:
-	cp dotfiles/screenrc ${HOME}/.screenrc
+	ln dotfiles/screenrc ${HOME}/.screenrc
 
 Xdefaults:
-	cp dotfiles/Xdefaults ${HOME}/.Xdefaults
+	ln dotfiles/Xdefaults ${HOME}/.Xdefaults
 
 all: bash git hg screen Xdefaults
-	@echo 
+	@echo
+
