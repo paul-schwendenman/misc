@@ -29,12 +29,19 @@ Xdefaults:
 all: bash git hg screen Xdefaults
 	@echo
 
+clean:
+	rm ${HOME}/.bashrc
+	rm ${HOME}/.gitconfig
+	rm ${HOME}/.hgrc
+	rm ${HOME}/.screenrc
+	rm ${HOME}/.Xdefaults
+
 backup:
-	touch dotfiles/bashrc
-	touch dotfiles/gitconfig
-	touch dotfiles/hgrc
-	touch dotfiles/screenrc
-	touch dotfiles/Xdefaults
+	touch -a ${HOME}/.bashrc dotfiles/bashrc
+	touch -a ${HOME}/.gitconfig dotfiles/gitconfig
+	touch -a ${HOME}/.hgrc dotfiles/hgrc
+	touch -a ${HOME}/.screenrc dotfiles/screenrc
+	touch -a ${HOME}/.Xdefaults dotfiles/Xdefaults
 	rm dotfiles/bashrc
 	rm dotfiles/gitconfig
 	rm dotfiles/hgrc
