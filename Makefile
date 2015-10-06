@@ -6,6 +6,7 @@ help:
 	@echo '   make git                         copy gitconfig to home   '
 	@echo '   make hg                          copy hgrc to home        '
 	@echo '   make screen                      copy screenrc to home    '
+	@echo '   make fish                        copy fish config to home '
 	@echo '   make Xdefaults                   copy Xdefaults to home   '
 	@echo '                                                             '
 	@echo '   make all                         copy all dotfiles to home'
@@ -26,6 +27,10 @@ screen:
 Xdefaults:
 	ln dotfiles/Xdefaults ${HOME}/.Xdefaults
 
+fish:
+	mkdir -p ${HOME}/config/fish/
+	ln dotfiles/config.fish ${HOME}/config/fish/config.fish
+
 all: bash git hg screen Xdefaults
 	@echo
 
@@ -35,6 +40,7 @@ clean:
 	rm ${HOME}/.hgrc
 	rm ${HOME}/.screenrc
 	rm ${HOME}/.Xdefaults
+	rm ${HOME}/.config/fish/config.fish
 
 backup:
 	touch -a ${HOME}/.bashrc dotfiles/bashrc
@@ -42,13 +48,16 @@ backup:
 	touch -a ${HOME}/.hgrc dotfiles/hgrc
 	touch -a ${HOME}/.screenrc dotfiles/screenrc
 	touch -a ${HOME}/.Xdefaults dotfiles/Xdefaults
+	touch -a ${HOME}/.config/fish/config.fish dotfiles/config.fish
 	rm dotfiles/bashrc
 	rm dotfiles/gitconfig
 	rm dotfiles/hgrc
 	rm dotfiles/screenrc
 	rm dotfiles/Xdefaults
+	rm dotfiles/config.fish
 	ln ${HOME}/.bashrc dotfiles/bashrc
 	ln ${HOME}/.gitconfig dotfiles/gitconfig
 	ln ${HOME}/.hgrc dotfiles/hgrc
 	ln ${HOME}/.screenrc dotfiles/screenrc
 	ln ${HOME}/.Xdefaults dotfiles/Xdefaults
+	ln ${HOME}/.config/fish/config.fish dotfiles/config.fish
