@@ -28,8 +28,8 @@ Xdefaults:
 	ln dotfiles/Xdefaults ${HOME}/.Xdefaults
 
 fish:
-	mkdir -p ${HOME}/config/fish/
-	ln dotfiles/config.fish ${HOME}/config/fish/config.fish
+	mkdir -p ${HOME}/.config/fish/
+	ln dotfiles/config.fish ${HOME}/.config/fish/config.fish
 
 all: bash git hg screen Xdefaults
 	@echo
