@@ -31,6 +31,9 @@ fish:
 	mkdir -p ${HOME}/.config/fish/
 	ln dotfiles/config.fish ${HOME}/.config/fish/config.fish
 
+pythonrc:
+	ln dotfiles/pythonrc ${HOME}/.pythonrc
+
 all: bash git hg screen Xdefaults
 	@echo
 
@@ -49,15 +52,18 @@ backup:
 	touch -a ${HOME}/.screenrc dotfiles/screenrc
 	touch -a ${HOME}/.Xdefaults dotfiles/Xdefaults
 	touch -a ${HOME}/.config/fish/config.fish dotfiles/config.fish
+	touch -a ${HOME}/.pythonrc dotfiles/pythonrc
 	rm dotfiles/bashrc
 	rm dotfiles/gitconfig
 	rm dotfiles/hgrc
 	rm dotfiles/screenrc
 	rm dotfiles/Xdefaults
 	rm dotfiles/config.fish
+	rm dotfiles/pythonrc
 	ln ${HOME}/.bashrc dotfiles/bashrc
 	ln ${HOME}/.gitconfig dotfiles/gitconfig
 	ln ${HOME}/.hgrc dotfiles/hgrc
 	ln ${HOME}/.screenrc dotfiles/screenrc
 	ln ${HOME}/.Xdefaults dotfiles/Xdefaults
 	ln ${HOME}/.config/fish/config.fish dotfiles/config.fish
+	ls ${HOME}/.pythonrc dotfiles/pythonrc
