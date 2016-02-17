@@ -184,3 +184,12 @@ export PIP_REQUIRE_VIRTUALENV=true
 gpip(){
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
+
+if [ -d $HOME/.rvm/bin ]; then
+  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+fi
+
+# git tab completion (homebrew)
+if [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
+    source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+fi
