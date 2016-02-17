@@ -18,6 +18,9 @@ bash:
 git:
 	ln dotfiles/gitconfig ${HOME}/.gitconfig
 
+git-prompt:
+	ln scripts/git-prompt.sh ${HOME}/.git-prompt.sh
+
 hg:
 	ln dotfiles/hgrc ${HOME}/.hgrc
 
