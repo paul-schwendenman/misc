@@ -155,3 +155,10 @@ start_ssh ()
 if [ -f "$HOME/.pythonrc" ] ; then
 	export PYTHONSTARTUP="$HOME/.pythonrc"
 fi
+
+# Encourage use of virtualenvs
+export PIP_REQUIRE_VIRTUALENV=true
+
+gpip(){
+   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
