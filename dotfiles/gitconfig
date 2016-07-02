@@ -24,3 +24,5 @@
     logdra = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\" --all
     logdr = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\"
     uncommit = reset --soft HEAD^
+[diff]
+	algorithm = histogram

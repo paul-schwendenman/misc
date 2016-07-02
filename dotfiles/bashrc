@@ -193,11 +193,27 @@ gpip(){
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
 
+if [ -f /usr/local/etc/bash_completion.d/password-store ]; then
+  source /usr/local/etc/bash_completion.d/password-store
+fi
+
 if [ -d $HOME/.rvm/bin ]; then
   export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+fi
+
+if [ -z "$GPG_AGENT_INFO" ]; then
+	eval $(gpg-agent --daemon)
 fi
 
 # git tab completion (homebrew)
 if [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
     source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+fi
+
+if [ -d $HOME/.virtualenvs ]; then
+    export WORKON_HOME=~/.virtualenvs
+fi
+
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    source /usr/local/bin/virtualenvwrapper.sh
 fi
