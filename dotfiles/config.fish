@@ -14,3 +14,7 @@ function start_ssh
     end
     ssh-add ~/.ssh/server_rsa
 end
+
+function qrcode
+     xclip -o selection clipboard | qrencode --size 10 -o - | feh -x --title QR -g +200+200 -
+end
