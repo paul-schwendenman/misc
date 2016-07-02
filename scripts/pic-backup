@@ -1,13 +1,17 @@
 #!/bin/bash
 
 #PICPATH=/media/paul/fa3ea422-7078-4c0a-a7b8-37ed13d211ac/paul/pictures/
-PICPATH=/media/paul/Main/pictures/
+DRIVE=/media/paul/Main
 
 if [ "$1" == "dryrun" ]; then
-	rsync -aivn --progress ~/pictures/ $PICPATH | less
+	(rsync -aivn --progress ${HOME}/pictures/ ${DRIVE}/pictures/;
+	rsync -aivn --progress ${HOME}/videos/ ${DRIVE}/videos/;
+	rsync -aivn --progress ${HOME}/music/ ${DRIVE}/music/) | less
 fi
 if [ "$1" == "go" ]; then
-	rsync -a --progress ~/pictures/ $PICPATH
+	rsync -a --progress ${HOME}/pictures/ ${DRIVE}/pictures/
+	rsync -a --progress ${HOME}/videos/ ${DRIVE}/videos/
+	rsync -a --progress ${HOME}/music/ ${DRIVE}/music/
 fi
 if [ "$#" -eq 0 ]; then
 	echo "Usage $0 subcommand"
