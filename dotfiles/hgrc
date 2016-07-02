@@ -6,3 +6,5 @@ merge = internal:merge
 
 [extensions]
 color =
+hgext.bookmarks =
+hggit =
