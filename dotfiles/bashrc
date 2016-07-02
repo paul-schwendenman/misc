@@ -149,6 +149,12 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
+# Radio junk
+alias wosu="screen -d -m mplayer -cache 128 mms://140.254.23.69/wmtencoder/wosu-am.wmv"
+
+#Dual screen alias
+alias dualscreen="~/.screenlayout/Work.sh"
+
 start_ssh ()
 {
 	if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
