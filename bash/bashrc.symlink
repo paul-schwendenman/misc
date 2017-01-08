@@ -52,18 +52,6 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ -f "/usr/bin/acpi" ] ; then
-    __bat__ ()
-    {
-       acpi -b | awk -F ' ' '{print $4}'
-    }
-else
-    __bat__ ()
-    {
-        echo
-    }
-fi
-
 if [ -f /etc/bash_completion.d/git-prompt ]; then
     source /etc/bash_completion.d/git-prompt
 elif [ -f ~/.git-prompt.sh ]; then
@@ -73,7 +61,7 @@ else
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \\[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]:\[\033[0;35m \$(__bat__) \033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[0;35m\]\$?\[\033[0;33m\]\$(__git_ps1) \[\033[m\]\w\[\033[m\]  \n$ "
+    PS1="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \\[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]: \033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[0;35m\]\$? \[\033[0;33m\]\$(__git_ps1) \[\033[m\]\w\[\033[m\]  \n$ "
 	#"${debian_chroot:+($debian_chroot)}\n\[\033[0;30m\][$$:$PPID - \j:\!\[\033[0;30m\]]\[\033[0;36m\] \T \\[\033[0;30m\][\[\033[0;32m\]\u@\H\[\033[0;30m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[0;30m\]] \[\033[0;30m\]\w\[\033[0;30m\]  \n$ " #0;32m
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
