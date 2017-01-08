@@ -7,7 +7,7 @@
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
-HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
+#HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoreboth
 
@@ -43,12 +43,12 @@ force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-	color_prompt=
+      color_prompt=
     fi
 fi
 
@@ -61,11 +61,10 @@ else
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \\[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]: \033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[0;35m\]\$? \[\033[0;33m\]\$(__git_ps1) \[\033[m\]\w\[\033[m\]  \n$ "
-	#"${debian_chroot:+($debian_chroot)}\n\[\033[0;30m\][$$:$PPID - \j:\!\[\033[0;30m\]]\[\033[0;36m\] \T \\[\033[0;30m\][\[\033[0;32m\]\u@\H\[\033[0;30m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[0;30m\]] \[\033[0;30m\]\w\[\033[0;30m\]  \n$ " #0;32m
+    PS1="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \\[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]: \033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[0;35m\]\$?\[\033[0;33m\]\$(__git_ps1) \[\033[m\]\w\[\033[m\]  \n$ "
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1="${debian_chroot:+($debian_chroot)}\n[$$:$PPID - \j:$?:\!] [\T \[\\u@\H: $(__bat__) +${SHLVL}] \w  \n$ "
+    PS1="${debian_chroot:+($debian_chroot)}\n[$$:$PPID - \j:\!] [\T \u@\H: +${SHLVL}] \$?\$(__git_ps1) \w \n$ "
     #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
@@ -83,29 +82,19 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    alias dir='dir --color=auto'
 
     alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
 fi
-
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-
-alias joe='joe -keepup'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-#if [ -f ~/.bash_aliases ]; then
-#    . ~/.bash_aliases
-#fi
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -114,18 +103,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# startx if the first ttyl on a given uname
-#if [ ${SHLVL} = 1 ] && [ $(tty) = /dev/tty1 ] && ! [ `uname -n` = "paul-ubuntu" ] ; then
-#    startx
-#fi
-
-#if [ ${SHLVL} = 1 ] && ! [ -z `echo $(tty) | grep tty` ]; then fi
-#if [ ${SHLVL} = 2 ] && [ ${TERM} = "screen" ] ; then fi
 #WHITE="${debian_chroot:+($debian_chroot)}\n\[\033[0;37m\][$$:$PPID - \j:\!\[\033[0;37m\]]\[\033[0;36m\] \T \\[\033[0;37m\][\[\033[0;32m\]\u@\H\[\033[0;37m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[0;37m\]] \[\033[0;37m\]\w\[\033[0;37m\]  \n$ " #0;32m
 #BLACK="${debian_chroot:+($debian_chroot)}\n\[\033[0;30m\][$$:$PPID - \j:\!\[\033[0;30m\]]\[\033[0;36m\] \T \\[\033[0;30m\][\[\033[0;32m\]\u@\H\[\033[0;30m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[0;30m\]] \[\033[0;30m\]\w\[\033[0;30m\]  \n$ " #0;32m
 #CLR="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \\[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]:\[\033[0;35m `acpi -b | awk -F ' ' '{print $4}'` \033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[m\]\w\[\033[m\]  \n$ " #0;32m
-
-#export PYTHONPATH=${HOME}/.lib/python
 
 # Set joe as editor
 if [ -f /usr/bin/joe ]; then
@@ -143,24 +123,18 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
-# Radio junk
-alias wosu="screen -d -m mplayer -cache 128 mms://140.254.23.69/wmtencoder/wosu-am.wmv"
-
-#Dual screen alias
-alias dualscreen="~/.screenlayout/Work.sh"
-
 start_ssh ()
 {
-	if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
-		eval $(ssh-agent);
-		echo 'SSH_AUTH_SOCK='"$SSH_AUTH_SOCK"
-		trap "kill $SSH_AGENT_PID" 0
-	fi
-	ssh-add ~/.ssh/server_rsa
+    if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
+        eval $(ssh-agent);
+        echo 'SSH_AUTH_SOCK='"$SSH_AUTH_SOCK"
+        trap "kill $SSH_AGENT_PID" 0
+    fi
+    ssh-add ~/.ssh/server_rsa
 }
 
 if [ -f "$HOME/.pythonrc" ] ; then
-	export PYTHONSTARTUP="$HOME/.pythonrc"
+    export PYTHONSTARTUP="$HOME/.pythonrc"
 fi
 
 # Encourage use of virtualenvs
@@ -171,15 +145,15 @@ gpip(){
 }
 
 if [ -f /usr/local/etc/bash_completion.d/password-store ]; then
-  source /usr/local/etc/bash_completion.d/password-store
+    source /usr/local/etc/bash_completion.d/password-store
 fi
 
 if [ -d $HOME/.rvm/bin ]; then
-  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+    export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 fi
 
 if [ -z "$GPG_AGENT_INFO" ]; then
-	eval $(gpg-agent --daemon)
+    eval $(gpg-agent --daemon)
 fi
 
 # git tab completion (homebrew)
