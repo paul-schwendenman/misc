@@ -124,6 +124,12 @@ install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
+  for src in $(find -H "$ROOT_DIR" -maxdepth 2 -name '*.config' -not -path '*.git*')
+  do
+    dst="$HOME/.config/$(basename "${src%.*}")"
+    link_file "$src" "$dst"
+  done
+
   for src in $(find -H "$ROOT_DIR" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
   do
     dst="$HOME/.$(basename "${src%.*}")"
