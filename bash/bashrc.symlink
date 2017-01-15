@@ -157,7 +157,7 @@ if [ -z "$GPG_AGENT_INFO" ]; then
 fi
 
 # git tab completion (homebrew)
-if which brew; then
+if which brew &> /dev/null; then
     if [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
         source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
     fi
