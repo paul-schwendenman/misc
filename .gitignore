@@ -1,3 +1,5 @@
 *~
 
 git/gitconfig.local.symlink
+
+fish.config/fishd.*
