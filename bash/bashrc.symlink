@@ -56,6 +56,8 @@ if [ -f /etc/bash_completion.d/git-prompt ]; then
     source /etc/bash_completion.d/git-prompt
 elif [ -f ~/.git-prompt.sh ]; then
     GIT_PS1_SHOWDIRTYSTATE=true
+    GIT_PS1_SHOWUNTRACKEDFILES=true
+    GIT_PS1_SHOWUPSTREAM="auto"
     source ~/.git-prompt.sh
 else
     __git_ps1 () { echo -n " (unknown)"; }
