@@ -55,6 +55,7 @@ fi
 if [ -f /etc/bash_completion.d/git-prompt ]; then
     source /etc/bash_completion.d/git-prompt
 elif [ -f ~/.git-prompt.sh ]; then
+    GIT_PS1_SHOWDIRTYSTATE=true
     source ~/.git-prompt.sh
 else
     __git_ps1 () { echo -n " (unknown)"; }
