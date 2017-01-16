@@ -1,0 +1,19 @@
+"*":
+  "autocomplete-python":
+    useKite: false
+  core:
+    telemetryConsent: "limited"
+    themes: [
+      "one-dark-ui"
+      "solarized-dark-syntax"
+    ]
+  editor: {}
+  "exception-reporting":
+    userId: "c403785b-107e-b45d-fedf-176957bb7e77"
+  "git-plus":
+    general:
+      _analyticsUserId: "7546c55c-9d4b-4610-bdbc-e07d6a509c39"
+  linter:
+    showErrorPanel: false
+  welcome:
+    showOnStartup: false
