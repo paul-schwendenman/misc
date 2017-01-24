@@ -10,20 +10,20 @@
 [diff]
         algorithm = histogram
 [alias]
-        #quick look at all repo
-        loggsa = log --color --date-order --graph --oneline --decorate --simplify-by-decoration --all
-        #quick look at active branch (or refs pointed)
-        loggs  = log --color --date-order --graph --oneline --decorate --simplify-by-decoration
-        #extend look at all repo
-        logga  = log --color --date-order --graph --oneline --decorate --all
         #extend look at active branch
         logg   = log --color --date-order --graph --oneline --decorate
+        #extend look at all repo
+        logga  = log --color --date-order --graph --oneline --decorate --all
+        #quick look at active branch (or refs pointed)
+        loggs  = log --color --date-order --graph --oneline --decorate --simplify-by-decoration
+        #quick look at all repo
+        loggsa = log --color --date-order --graph --oneline --decorate --simplify-by-decoration --all
         #Look with date
-        logda  = log --color --date-order --date=local --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s\" --all
         logd   = log --color --date-order --date=local --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s\"
+        logda  = log --color --date-order --date=local --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ad%Creset %C(auto)%d%Creset %s\" --all
         #Look with relative date
-        logdra = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\" --all
         logdr = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\"
+        logdra = log --color --date-order --graph --format=\"%C(auto)%h%Creset %C(blue bold)%ar%Creset %C(auto)%d%Creset %s\" --all
         uncommit = reset --soft HEAD^
         # Missing newlines
         newlines = !git ls-files -z | xargs -0 -L1 bash -c 'test "$(tail -c 1 "$0")" && echo "No new line at end of $0"'
