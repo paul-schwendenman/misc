@@ -151,10 +151,6 @@ if [ -f /usr/local/etc/bash_completion.d/password-store ]; then
     source /usr/local/etc/bash_completion.d/password-store
 fi
 
-if [ -d $HOME/.rvm/bin ]; then
-    export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-fi
-
 if [ -z "$GPG_AGENT_INFO" ]; then
     eval $(gpg-agent --daemon)
 fi
