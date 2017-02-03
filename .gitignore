@@ -14,3 +14,4 @@ atom.symlink/recovery
 git/gitconfig.local.symlink
 
 fish.config/fishd.*
+fish.config/fish_history
