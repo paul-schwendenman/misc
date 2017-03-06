@@ -147,8 +147,8 @@ gpip(){
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
 
-if [ -f /usr/local/etc/bash_completion.d/password-store ]; then
-    source /usr/local/etc/bash_completion.d/password-store
+if [ -f /usr/local/etc/bash_completion.d/pass ]; then
+    source /usr/local/etc/bash_completion.d/pass
 fi
 
 if [ -z "$GPG_AGENT_INFO" ]; then
