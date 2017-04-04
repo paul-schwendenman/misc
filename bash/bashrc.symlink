@@ -112,9 +112,9 @@ fi
 
 # Set joe as editor
 if [ -f /usr/bin/joe ]; then
-	export EDITOR=/usr/bin/joe
+    export EDITOR=/usr/bin/joe
 elif [ -f /usr/local/bin/joe ]; then
-	export EDITOR=/usr/local/bin/joe
+    export EDITOR=/usr/local/bin/joe
 fi
 
 # set PATH so it includes user's private bin if it exists
