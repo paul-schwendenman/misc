@@ -147,18 +147,14 @@ gpip(){
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
 
-if [ -f /usr/local/etc/bash_completion.d/pass ]; then
-    source /usr/local/etc/bash_completion.d/pass
-fi
-
 if [ -z "$GPG_AGENT_INFO" ]; then
     eval $(gpg-agent --daemon)
 fi
 
 # git tab completion (homebrew)
 if which brew &> /dev/null; then
-    if [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
-        source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+        source $(brew --prefix)/etc/bash_completion
     fi
 fi
 
