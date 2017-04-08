@@ -21,11 +21,14 @@ def remove_duplicates(seq, idfun=None):
        result.append(item)
    return result
 
+def strip_whitespace(line):
+    return line.strip()
+
 def main(filename='/home/paul/.bash_history'):
     with open(filename, mode='r+') as f:
         lines = f.readlines()
 
-        result = remove_duplicates(lines)
+        result = remove_duplicates(lines, strip_whitespace)
 
         f.seek(0)
         f.writelines(result)
