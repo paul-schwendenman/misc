@@ -4,7 +4,7 @@
 function from: https://www.peterbe.com/plog/uniqifiers-benchmark
 '''
 from __future__ import print_function
-import sys
+import os
 
 
 def remove_duplicates(seq, idfun=None):
@@ -24,7 +24,10 @@ def remove_duplicates(seq, idfun=None):
 def strip_whitespace(line):
     return line.strip()
 
-def main(filename='/home/paul/.bash_history'):
+def main(filename=None):
+    if not filename:
+        filename = os.path.join(os.path.expanduser('~'), '.bash_history')
+
     with open(filename, mode='r+') as f:
         lines = f.readlines()
 
@@ -38,4 +41,4 @@ def main(filename='/home/paul/.bash_history'):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    main()
