@@ -1,13 +1,38 @@
 #!/usr/bin/python
+'''Remove duplicate lines of bash history pres
 
-with open("/home/paul/.bash_history", mode='r') as f:
-    l = f.readlines()
-    print len(l), 
+function from: https://www.peterbe.com/plog/uniqifiers-benchmark
+'''
+from __future__ import print_function
+import sys
 
-l = list(set(l))
 
-with open("/home/paul/.bash_history", mode='w') as f:
-    print len(l),
-    f.writelines(l)
+def remove_duplicates(seq, idfun=None):
+   if idfun is None:
+       def idfun(x):
+           return x
+   seen = {}
+   result = []
+   for item in seq:
+       marker = idfun(item)
+       if marker in seen:
+           continue
+       seen[marker] = 1
+       result.append(item)
+   return result
 
-print
+def main(filename='/home/paul/.bash_history'):
+    with open(filename, mode='r+') as f:
+        lines = f.readlines()
+
+        result = remove_duplicates(lines)
+
+        f.seek(0)
+        f.writelines(result)
+        f.truncate()
+
+    print('Reduced from {} to {} lines'.format(len(lines), len(result)))
+
+
+if __name__ == '__main__':
+    main(sys.argv[1])
