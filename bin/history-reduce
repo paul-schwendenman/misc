@@ -31,10 +31,10 @@ def main(filename=None):
     with open(filename, mode='r+') as f:
         lines = f.readlines()
 
-        result = remove_duplicates(lines, strip_whitespace)
+        result = remove_duplicates(reversed(lines), strip_whitespace)
 
         f.seek(0)
-        f.writelines(result)
+        f.writelines(reversed(result))
         f.truncate()
 
     print('Reduced from {} to {} lines'.format(len(lines), len(result)))
