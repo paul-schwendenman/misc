@@ -165,3 +165,5 @@ fi
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
+
+[[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local" # Load the local .bashrc
