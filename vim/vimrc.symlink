@@ -20,3 +20,9 @@ set laststatus=2
 set showmode
 set showcmd
 
+" Mouse support
+set mouse=a
+
+" Show whitespace
+set list listchars=tab:»·,trail:·
+
