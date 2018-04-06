@@ -149,6 +149,8 @@ if [ -z "$GPG_AGENT_INFO" ]; then
     eval $(gpg-agent --daemon)
 fi
 
+export GPG_TTY=$(tty)
+
 # git tab completion (homebrew)
 if which brew &> /dev/null; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
