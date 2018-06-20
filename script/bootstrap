@@ -28,7 +28,7 @@ fail () {
 }
 
 setup_gitconfig () {
-  if ! [ -f git/gitconfig.local.symlink ]
+  if ! [ -f git/.gitconfig.local ]
   then
     info 'setup gitconfig'
 
@@ -37,7 +37,7 @@ setup_gitconfig () {
     user ' - What is your github author email?'
     read -e git_authoremail
 
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
+    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.example > git/.gitconfig.local
 
     success 'gitconfig'
   fi
@@ -124,12 +124,6 @@ install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$ROOT_DIR" -maxdepth 2 -name '*.config' -not -path '*.git*')
-  do
-    dst="$HOME/.config/$(basename "${src%.*}")"
-    link_file "$src" "$dst"
-  done
-
   for src in $(find -H "$ROOT_DIR" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
   do
     dst="$HOME/.$(basename "${src%.*}")"
@@ -139,6 +133,15 @@ install_dotfiles () {
 
 setup_gitconfig
 install_dotfiles
+stow --verbose=2 --ignore='\.example' --target $HOME \
+  -S bash \
+  -S fish \
+  -S git \
+  -S mercurial \
+  -S python \
+  -S screen \
+  -S vim \
+  -S X11
 
 echo ''
 echo '  All installed!'
