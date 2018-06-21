@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Use bazaar revision history to create a git repo
-bzr fast-export --plain | git fast-import
