@@ -134,6 +134,7 @@ install_dotfiles () {
 setup_gitconfig
 install_dotfiles
 stow --verbose=2 --ignore='\.example' --target $HOME \
+  -S bin \
   -S bash \
   -S fish \
   -S git \
