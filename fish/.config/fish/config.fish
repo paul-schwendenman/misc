@@ -6,6 +6,10 @@ if test -d $HOME/.local/bin
     set PATH $HOME/.local/bin/ $PATH
 end
 
+if test -d $HOME/.bin
+    set PATH $HOME/.bin/ $PATH
+end
+
 function start_ssh
     if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]
         eval (ssh-agent)
