@@ -124,16 +124,6 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
-start_ssh ()
-{
-    if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
-        eval $(ssh-agent);
-        echo 'SSH_AUTH_SOCK='"$SSH_AUTH_SOCK"
-        trap "kill $SSH_AGENT_PID" 0
-    fi
-    ssh-add ~/.ssh/server_rsa
-}
-
 if [ -f "$HOME/.pythonrc" ] ; then
     export PYTHONSTARTUP="$HOME/.pythonrc"
 fi
@@ -144,10 +134,6 @@ export PIP_REQUIRE_VIRTUALENV=true
 gpip(){
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
-
-if [ -z "$GPG_AGENT_INFO" ]; then
-    eval $(gpg-agent --daemon)
-fi
 
 export GPG_TTY=$(tty)
 
