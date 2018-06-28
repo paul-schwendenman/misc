@@ -134,15 +134,9 @@ install_dotfiles () {
 setup_gitconfig
 install_dotfiles
 stow --target $HOME \
-  -S bin \
   -S bash \
-  -S fish \
   -S git \
-  -S mercurial \
-  -S python \
-  -S screen \
-  -S vim \
-  -S X11
+  -S vim
 
 echo ''
 echo '  All installed!'
