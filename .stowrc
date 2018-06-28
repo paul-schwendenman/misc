@@ -1,0 +1,4 @@
+--verbose=2
+--ignore='\.symlink$'
+--ignore='\.example$'
+--adopt
