@@ -1,0 +1,6 @@
+{
+    "workbench.startupEditor": "newUntitledFile",
+    "files.autoSave": "onFocusChange",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true
+}
