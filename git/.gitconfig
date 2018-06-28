@@ -2,7 +2,7 @@
 [color]
         ui = auto
 [core]
-        editor = joe
+        editor = vim
 [push]
         default = simple
 [diff]
