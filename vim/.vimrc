@@ -26,3 +26,12 @@ set mouse=a
 " Show whitespace
 set list listchars=tab:»·,trail:·
 
+" Indent Python nicely
+au BufNewFile,BufRead *.py
+    \ set tabstop=4     |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4  |
+    \ set textwidth=79  |
+    \ set expandtab     |
+    \ set autoindent    |
+    \ set fileformat=unix
