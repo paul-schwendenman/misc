@@ -38,6 +38,11 @@ brew install \
 	python \
 	vim
 
+brew cask install \
+	firefox \
+	google-chrome \
+	shiftit
+
 info 'changing user shell to brew bash'
 
 if ! grep '/usr/local/bin/bash' /etc/shells; then
