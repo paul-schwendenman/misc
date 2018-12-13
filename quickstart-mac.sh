@@ -36,6 +36,8 @@ brew install \
 	pass \
 	pinentry \
 	python \
+	python3 \
+	pipenv \
 	vim
 
 brew cask install \
