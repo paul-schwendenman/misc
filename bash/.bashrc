@@ -139,9 +139,16 @@ gpip3(){
    PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
 }
 
-GPG_TTY=$(tty)
-SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-export GPG_TTY SSH_AUTH_SOCK
+if [ -x "$(command -v gpgconf)" ]; then
+    GPG_TTY=$(tty)
+    SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    export GPG_TTY SSH_AUTH_SOCK
+else
+    if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then	
+        eval $(ssh-agent -S);	
+        trap "kill $SSH_AGENT_PID" 0	
+    fi
+fi
 
 # git tab completion (homebrew)
 if which brew &> /dev/null; then

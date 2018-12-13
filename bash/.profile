@@ -16,5 +16,7 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
+if [ -x "$(command -v gpgconf)" ]; then
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    gpgconf --launch gpg-agent
+fi
