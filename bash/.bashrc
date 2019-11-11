@@ -61,8 +61,25 @@ else
     __git_ps1 () { echo -n " (unknown)"; }
 fi
 
+if command -v kubectl >/dev/null 2>&1; then
+	function __kube_ps1 {
+	  local -r context="$(
+	    grep current-context ${KUBECONFIG:-${HOME}/.kube/config} \
+	      | sed 's/current-context: \(.*\)$/\1/g'
+	  )"
+	  local -r namespace="$(kubectl config view -o=jsonpath="{.contexts[?(@.name == '${context}')].context.namespace}")"
+
+	  if [[ -n ${context} ]]; then
+	    echo -e "(${context}:${namespace:-default})"
+	  fi
+	}
+else
+	function __kube_ps1 { echo -n "(?:?)";}
+fi
+
+
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]: \[\033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[0;35m\]\$?\[\033[0;33m\]\$(__git_ps1) \[\033[m\]\w\[\033[m\]\n$ "
+    PS1="${debian_chroot:+($debian_chroot)}\n\[\033[m\][$$:$PPID - \j:\!\[\033[m\]]\[\033[0;36m\] \T \[\033[m\][\[\033[0;32m\]\u@\H\[\033[m\]: \[\033[0;34m\]+${SHLVL}\[\033[m\]] \[\033[0;35m\]\$?\[\033[0;33m\]\$(__git_ps1) \$(__kube_ps1) \[\033[m\]\w\[\033[m\]\n$ "
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1="${debian_chroot:+($debian_chroot)}\n[$$:$PPID - \j:\!] [\T \u@\H: +${SHLVL}] \$?\$(__git_ps1) \w \n$ "
