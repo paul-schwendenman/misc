@@ -161,9 +161,9 @@ if [ -x "$(command -v gpgconf)" ]; then
     SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
     export GPG_TTY SSH_AUTH_SOCK
 else
-    if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then	
-        eval $(ssh-agent -S);	
-        trap "kill $SSH_AGENT_PID" 0	
+    if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
+        eval $(ssh-agent -S);
+        trap "kill $SSH_AGENT_PID" 0
     fi
 fi
 
