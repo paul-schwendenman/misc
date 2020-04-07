@@ -74,7 +74,7 @@ if command -v kubectl >/dev/null 2>&1; then
 	  fi
 	}
 else
-	function __kube_ps1 { echo -n "(?:?)";}
+	function __kube_ps1 { echo -n ""; }
 fi
 
 
