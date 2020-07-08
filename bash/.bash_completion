@@ -6,3 +6,7 @@ then
         source "$f"
     done
 fi
+
+complete -C /usr/local/bin/consul consul
+
+complete -C /usr/local/bin/nomad nomad
