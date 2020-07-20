@@ -26,6 +26,10 @@ set mouse=a
 " Show whitespace
 set list listchars=tab:»·,trail:·
 
+" More powerful backspace
+set backspace=indent,eol,start
+
+
 " Indent Python nicely
 au BufNewFile,BufRead *.py
     \ set tabstop=4     |
