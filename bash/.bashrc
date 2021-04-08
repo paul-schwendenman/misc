@@ -157,7 +157,7 @@ gpip3(){
    PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
 }
 
-enable_gpg_agent=yes
+# enable_gpg_agent=yes
 if [ -n "$enable_gpg_agent" -a -x "$(command -v gpgconf)" ]; then
     GPG_TTY=$(tty)
     SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
