@@ -1,6 +1,10 @@
 
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
 
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+    eval `ssh-agent -s`
+fi
+
 export PATH="/usr/local/opt/node@8/bin:$PATH"
 
 export PYENV_ROOT="$HOME/.pyenv"
