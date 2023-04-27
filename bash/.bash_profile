@@ -17,3 +17,7 @@ fi
 if [ -f /usr/local/opt/asdf/asdf.sh ]; then
     . /usr/local/opt/asdf/asdf.sh
 fi
+
+if [ -f /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
