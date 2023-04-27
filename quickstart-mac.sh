@@ -47,8 +47,14 @@ brew cask install \
 
 info 'changing user shell to brew bash'
 
-if ! grep '/usr/local/bin/bash' /etc/shells; then
+# if ! grep '/usr/local/bin/bash' /etc/shells; then
 
-  echo '/usr/local/bin/bash' | sudo tee -a /etc/shells;
-  chsh -s /usr/local/bin/bash;
+#   echo '/usr/local/bin/bash' | sudo tee -a /etc/shells;
+#   chsh -s /usr/local/bin/bash;
+# fi;
+
+if ! grep '/opt/homebrew/bin/bash' /etc/shells; then
+
+  echo '/opt/homebrew/bin/bash' | sudo tee -a /etc/shells;
+  chsh -s /opt/homebrew/bin/bash;
 fi;
