@@ -76,7 +76,7 @@ if command -v kubectl >/dev/null 2>&1; then
 else
 	function __kube_ps1 { echo -n ""; }
 fi
-function __kube_ps1 { echo -n ""; }
+# function __kube_ps1 { echo -n ""; }
 
 
 if [ "$color_prompt" = yes ]; then
