@@ -61,7 +61,7 @@ else
     __git_ps1 () { echo -n " (unknown)"; }
 fi
 
-if command -v kubectl >/dev/null 2>&1; then
+if [ -f ${KUBECONFIG:-${HOME}/.kube/config} ] && command -v kubectl >/dev/null 2>&1; then
 	function __kube_ps1 {
 	  local -r context="$(
 	    grep current-context ${KUBECONFIG:-${HOME}/.kube/config} \
