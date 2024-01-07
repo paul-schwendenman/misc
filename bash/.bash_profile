@@ -14,8 +14,9 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 
-if [ -f /usr/local/opt/asdf/asdf.sh ]; then
-    . /usr/local/opt/asdf/asdf.sh
+if [ -f /usr/local/opt/asdf/libexec/asdf.sh ]; then
+    # . /usr/local/opt/asdf/asdf.sh
+    . /usr/local/opt/asdf/libexec/asdf.sh
 fi
 
 if [ -f /opt/homebrew/bin/brew ]; then
