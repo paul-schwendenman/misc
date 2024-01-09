@@ -28,6 +28,8 @@
 
 [include]
         path = ~/.gitconfig.local
+[user]
+        signingkey = 68207CD9783F93ECBFF9653640D9D08813E47FC4
 [tag]
-	forceSignAnnotated = true
-	gpgSign = true
+        forceSignAnnotated = true
+        gpgSign = true
