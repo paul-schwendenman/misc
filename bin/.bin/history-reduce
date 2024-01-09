@@ -28,7 +28,7 @@ def main(filename=None):
     if not filename:
         filename = os.path.join(os.path.expanduser('~'), '.bash_history')
 
-    with open(filename, mode='r+') as f:
+    with open(filename, mode='r+', encoding="utf-8") as f:
         lines = f.readlines()
 
         result = remove_duplicates(reversed(lines), strip_whitespace)
