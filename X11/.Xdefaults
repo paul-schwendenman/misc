@@ -27,7 +27,7 @@ URxvt.fading:      40
 URxvt.blurRadius:	10x10
 URxvt.reverseVideo: True
 
-URxvt.font:        xft:Monospace:pixelsize=10
+URxvt.font:        xft:Monospace:pixelsize=12
 URxvt.letterSpace:	-1
 
 
