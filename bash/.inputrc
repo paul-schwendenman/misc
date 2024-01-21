@@ -1,2 +1,7 @@
 set enable-bracketed-paste on
 #set editing-mode vi
+
+"\e[A": history-search-backward
+"\C-p": history-search-backward
+"\e[B": history-search-forward
+"\C-n": history-search-forward
