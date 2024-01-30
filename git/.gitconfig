@@ -28,3 +28,6 @@
 
 [include]
         path = ~/.gitconfig.local
+[tag]
+	forceSignAnnotated = true
+	gpgSign = true
