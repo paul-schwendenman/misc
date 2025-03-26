@@ -1,10 +1,6 @@
 #!/bin/bash
 
 # Usage: ./clone_local_repos.sh <source_dir> <target_dir>
-# Example:
-# ./clone_local_repos.sh /media/paul/.../projects ~/projects
-
-set -e
 
 SOURCE_DIR="$1"
 TARGET_DIR="$2"
@@ -16,45 +12,59 @@ fi
 
 mkdir -p "$TARGET_DIR"
 
+FAILED_REPOS=()
+
 for repo_path in "$SOURCE_DIR"/*; do
   if [ -d "$repo_path/.git" ]; then
     repo_name=$(basename "$repo_path")
     target_repo="$TARGET_DIR/$repo_name"
 
+    if [ -d "$target_repo/.git" ]; then
+      echo "⚠️  Skipping $repo_name (already exists)"
+      continue
+    fi
+
     echo "Cloning $repo_name..."
 
-    # Clone the repo as a bare repo into a temp directory to preserve everything
     tmp_bare=$(mktemp -d)
-    git --git-dir="$repo_path/.git" clone --mirror "$repo_path" "$tmp_bare"
 
-    # Clone from the bare into the target dir
-    git clone "$tmp_bare" "$target_repo"
+    if git --git-dir="$repo_path/.git" clone --mirror "$repo_path" "$tmp_bare" 2>/dev/null; then
+      if git clone "$tmp_bare" "$target_repo" 2>/dev/null; then
+        cd "$target_repo" || continue
+        git remote rename origin local
 
-    cd "$target_repo"
+        cd "$repo_path"
+        for remote in $(git remote); do
+          if [ "$remote" != "origin" ]; then
+            url=$(git remote get-url "$remote")
+            cd "$target_repo"
+            git remote add "$remote" "$url"
+          fi
+        done
 
-    # Rename 'origin' to 'local'
-    git remote rename origin local
-
-    # Re-add any other remotes from the original repo
-    cd "$repo_path"
-    for remote in $(git remote); do
-      if [ "$remote" != "origin" ]; then
-        url=$(git remote get-url "$remote")
         cd "$target_repo"
-        git remote add "$remote" "$url"
+        git fetch --all --tags
+        echo "✅ Finished cloning $repo_name"
+      else
+        echo "❌ Failed to clone $repo_name from bare mirror"
+        FAILED_REPOS+=("$repo_name")
       fi
-    done
+    else
+      echo "❌ Failed to create bare mirror for $repo_name"
+      FAILED_REPOS+=("$repo_name")
+    fi
 
-    cd "$target_repo"
-    echo "Fetching all branches and tags..."
-    git fetch --all --tags
-
-    # Clean up temp bare repo
     rm -rf "$tmp_bare"
-
-    echo "✅ Finished cloning $repo_name"
     echo
   fi
 done
 
-echo "🎉 All repositories cloned to $TARGET_DIR"
+# Summary
+if [ ${#FAILED_REPOS[@]} -ne 0 ]; then
+  echo "🚨 The following repos failed to clone:"
+  for repo in "${FAILED_REPOS[@]}"; do
+    echo "  - $repo"
+  done
+else
+  echo "🎉 All repositories cloned successfully!"
+fi
