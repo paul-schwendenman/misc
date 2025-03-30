@@ -61,20 +61,29 @@ else
     __git_ps1 () { echo -n " (unknown)"; }
 fi
 
-if [ -f ${KUBECONFIG:-${HOME}/.kube/config} ] && command -v kubectl >/dev/null 2>&1; then
-	function __kube_ps1 {
-	  local -r context="$(
-	    grep current-context ${KUBECONFIG:-${HOME}/.kube/config} \
-	      | sed 's/current-context: \(.*\)$/\1/g'
-	  )"
-	  local -r namespace="$(kubectl config view -o=jsonpath="{.contexts[?(@.name == '${context}')].context.namespace}")"
+if command -v kubectl >/dev/null 2>&1; then
+  function __kube_ps1 {
+    local config_files="${KUBECONFIG:-$HOME/.kube/config}"
+    local context=""
 
-	  if [[ -n ${context} ]]; then
-	    echo -e "(${context}:${namespace:-default})"
-	  fi
-	}
+    IFS=':' read -ra paths <<< "$config_files"
+    for path in "${paths[@]}"; do
+      if [[ -f "$path" ]]; then
+        context=$(grep '^current-context:' "$path" | sed 's/current-context: \(.*\)/\1/')
+        if [[ -n "$context" ]]; then
+          break
+        fi
+      fi
+    done
+
+    local namespace=""
+    if [[ -n "$context" ]]; then
+      namespace=$(kubectl config view -o=jsonpath="{.contexts[?(@.name == '${context}')].context.namespace}" 2>/dev/null)
+      echo -e "(${context}:${namespace:-default})"
+    fi
+  }
 else
-	function __kube_ps1 { echo -n ""; }
+  function __kube_ps1 { echo -n ""; }
 fi
 # function __kube_ps1 { echo -n ""; }
 
