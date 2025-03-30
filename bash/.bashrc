@@ -61,6 +61,11 @@ else
     __git_ps1 () { echo -n " (unknown)"; }
 fi
 
+# Load kubeconfigs from ~/.kube/configs if any exist
+if compgen -G "$HOME/.kube/configs/*.yaml" > /dev/null; then
+  export KUBECONFIG=$(find "$HOME/.kube/configs" -type f -name "*.yaml" | tr '\n' ':' | sed 's/:$//')
+fi
+
 if command -v kubectl >/dev/null 2>&1; then
   function __kube_ps1 {
     local config_files="${KUBECONFIG:-$HOME/.kube/config}"
