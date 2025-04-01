@@ -210,3 +210,8 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Add Go binaries to PATH if Go is installed
+if command -v go >/dev/null 2>&1; then
+  export PATH="$PATH:$(go env GOROOT)/bin:$(go env GOPATH)/bin"
+fi
