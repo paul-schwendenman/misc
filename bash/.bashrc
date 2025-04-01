@@ -177,6 +177,9 @@ start_gpg_agent() {
     export GPG_TTY SSH_AUTH_SOCK
 }
 
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # enable_gpg_agent=yes
 if [ -n "$enable_gpg_agent" -a -x "$(command -v gpgconf)" ]; then
     GPG_TTY=$(tty)
