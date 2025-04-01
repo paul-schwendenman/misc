@@ -205,11 +205,11 @@ fi
 
 [[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local" # Load the local .bashrc
 
-[ -s "/opt/homebrew/opt/asdf/libexec/asdf.sh" ] && source /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Check if asdf is available and set up
+if command -v asdf >/dev/null 2>&1; then
+  source <(asdf completion bash)
+  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fi
 
 # Add Go binaries to PATH if Go is installed
 if command -v go >/dev/null 2>&1; then
