@@ -5,7 +5,7 @@
         editor = vim
 [push]
         default = simple
-	autoSetupRemote = true
+        autoSetupRemote = true
 [diff]
         algorithm = histogram
 [alias]

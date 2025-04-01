@@ -171,6 +171,8 @@ gpip3(){
    PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
 }
 
+export GPG_TTY=$(tty)
+
 start_gpg_agent() {
     GPG_TTY=$(tty)
     SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
