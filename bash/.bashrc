@@ -61,20 +61,34 @@ else
     __git_ps1 () { echo -n " (unknown)"; }
 fi
 
-if [ -f ${KUBECONFIG:-${HOME}/.kube/config} ] && command -v kubectl >/dev/null 2>&1; then
-	function __kube_ps1 {
-	  local -r context="$(
-	    grep current-context ${KUBECONFIG:-${HOME}/.kube/config} \
-	      | sed 's/current-context: \(.*\)$/\1/g'
-	  )"
-	  local -r namespace="$(kubectl config view -o=jsonpath="{.contexts[?(@.name == '${context}')].context.namespace}")"
+# Load kubeconfigs from ~/.kube/configs if any exist
+if compgen -G "$HOME/.kube/configs/*.yaml" > /dev/null; then
+  export KUBECONFIG=$(find "$HOME/.kube/configs" -type f -name "*.yaml" | tr '\n' ':' | sed 's/:$//')
+fi
 
-	  if [[ -n ${context} ]]; then
-	    echo -e "(${context}:${namespace:-default})"
-	  fi
-	}
+if command -v kubectl >/dev/null 2>&1; then
+  function __kube_ps1 {
+    local config_files="${KUBECONFIG:-$HOME/.kube/config}"
+    local context=""
+
+    IFS=':' read -ra paths <<< "$config_files"
+    for path in "${paths[@]}"; do
+      if [[ -f "$path" ]]; then
+        context=$(grep '^current-context:' "$path" | sed 's/current-context: \(.*\)/\1/')
+        if [[ -n "$context" ]]; then
+          break
+        fi
+      fi
+    done
+
+    local namespace=""
+    if [[ -n "$context" ]]; then
+      namespace=$(kubectl config view -o=jsonpath="{.contexts[?(@.name == '${context}')].context.namespace}" 2>/dev/null)
+      echo -e "(${context}:${namespace:-default})"
+    fi
+  }
 else
-	function __kube_ps1 { echo -n ""; }
+  function __kube_ps1 { echo -n ""; }
 fi
 # function __kube_ps1 { echo -n ""; }
 
@@ -165,6 +179,9 @@ start_gpg_agent() {
     export GPG_TTY SSH_AUTH_SOCK
 }
 
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # enable_gpg_agent=yes
 if [ -n "$enable_gpg_agent" -a -x "$(command -v gpgconf)" ]; then
     GPG_TTY=$(tty)
@@ -190,8 +207,13 @@ fi
 
 [[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local" # Load the local .bashrc
 
-[ -s "/opt/homebrew/opt/asdf/libexec/asdf.sh" ] && source /opt/homebrew/opt/asdf/libexec/asdf.sh
+# Check if asdf is available and set up
+if command -v asdf >/dev/null 2>&1; then
+  source <(asdf completion bash)
+  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Add Go binaries to PATH if Go is installed
+if command -v go >/dev/null 2>&1; then
+  export PATH="$PATH:$(go env GOROOT)/bin:$(go env GOPATH)/bin"
+fi
