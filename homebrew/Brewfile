@@ -1,39 +1,35 @@
+# Taps
+tap 'tonarino/innernet'
+# tap 'dopplerhq/cli'
+
 # Core tools
+brew 'asdf'
+# brew 'awscli'
 brew 'bash'
 brew 'bash-completion'
-brew 'git'
-brew 'vim'
-brew 'tree'
-brew 'stow'
-brew 'asdf'
-brew 'magic-wormhole'
-brew 'mosh'
-brew 'jq'
 brew 'coreutils'
-
-# Casks
-cask 'firefox'
-cask 'google-chrome'
-cask 'visual-studio-code'
-cask 'docker'
-cask 'obsidian'
-
-# Database tools
-cask 'beekeeper-studio'
-cask 'dbeaver-community'
+# brew 'doppler'
 brew 'duckdb'
-brew 'sqlite'
-
-# K8s tools
+brew 'git'
+brew 'innernet'
+brew 'jq'
 brew 'k9s'
 brew 'kubectx'
 brew 'kubernetes-cli'
+brew 'magic-wormhole'
+brew 'mosh'
+brew 'tree'
+brew 'sqlite'
+brew 'stow'
+brew 'vim'
 
-# Innernet
-tap 'tonarino/innernet'
-brew 'innernet'
+# Casks
+cask 'beekeeper-studio'
+cask 'dbeaver-community'
+cask 'docker'
+cask 'firefox'
+cask 'google-chrome'
+cask 'obsidian'
+cask 'visual-studio-code'
 
-# Work
-# tap 'dopplerhq/cli'
-# brew 'doppler'
-# brew 'awscli'
+
