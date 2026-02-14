@@ -2,6 +2,12 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Add asdf shims to PATH early (before interactive check) so non-interactive shells
+# (like those spawned by Claude or other tools) can find asdf-managed binaries
+if [ -d "${ASDF_DATA_DIR:-$HOME/.asdf}/shims" ]; then
+  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fi
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -210,7 +216,6 @@ fi
 # Check if asdf is available and set up
 if command -v asdf >/dev/null 2>&1; then
   source <(asdf completion bash)
-  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 fi
 
 # Add Go binaries to PATH if Go is installed
